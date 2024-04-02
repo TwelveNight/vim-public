@@ -1,0 +1,228 @@
+" .ideavimrc is a configuration file for IdeaVim plugin. It uses
+"   the same commands as the original .vimrc configuration.
+" You can find a list of commands here: https://jb.gg/h38q75
+" Find more examples here: https://jb.gg/share-ideavimrc
+
+let mapleader = " " 
+
+"" -- Suggested options --
+" Show a few lines of context around the cursor. Note that this makes the
+" text scroll if you mouse-click near the start or end of the window.
+set scrolloff=5
+set surround
+" cs "' change surrounding " to '
+" visual mod S" add surrounding "
+" ds" delete surrounding "
+set multiple-cursors
+set commentary
+set argtextobj
+set easymotion
+set textobj-entire
+set ReplaceWithRegister
+set exchange
+set NERDTree
+" Do incremental searching.
+set incsearch
+""" Idea specific settings ------------------
+set ideajoin
+set ideastatusicon=gray
+"set relativenumber
+" 显示当前模式
+set showmode
+" 共享系统粘贴板
+set clipboard+=unnamed
+" 开启语法高亮功能
+syntax enable
+" 忽略大小写 (该命令配合smartcase使用较好，否则不要开启)
+set ignorecase
+" 模式查找时智能忽略大小写
+set smartcase
+" vim自身命令行模式智能补全
+set wildmenu
+" 总是显示状态栏
+set laststatus=2
+
+
+" --- Enable IdeaVim plugins https://jb.gg/ideavim-plugins
+
+""" Plugins  --------------------------------
+" Highlight copied text
+Plug 'machakann/vim-highlightedyank'
+" Commentary plugin
+Plug 'tpope/vim-commentary'
+""" Plugin settings -------------------------
+let g:argtextobj_pairs="[:],(:),<:>"
+
+""" My Mappings -----------------------------
+nnoremap ge :action GotoNextError<CR>
+nnoremap gE :action GotoPreviousError<CR>
+
+map <leader>o <Action>(FileStructurePopup)
+
+nnoremap <leader>c :action CommentByLineComment<CR>
+
+nnoremap <Leader>p :action OpenFile<CR>
+
+" <C-n> seems to me as a better solution than <M-n>,
+" but we should finally support vim-visual-multi because vim-multiple-cursors is deprecated now
+map <C-n> <Plug>NextWholeOccurrence
+map <C-p> <Plug>RemoveOccurrence
+map <C-u> <Plug>SkipOccurrence
+
+" Focus center or current cursor position after \"J\"
+nnoremap n nzzzv
+nnoremap N Nzzzv
+nnoremap J mzJ`z
+" nnoremap j jzz
+" nnoremap k kzz
+
+" Quit normal mode
+nnoremap <Leader>q  :q<CR>
+nnoremap <Leader>Q  :qa!<CR>
+
+" Move half page faster
+nnoremap <Leader>d  <C-d>
+nnoremap <Leader>u  <C-u>
+
+" Terminal
+nnoremap <Leader>t  :action Terminal.OpenInTerminal<CR>
+nnoremap <C-/>  :action ActivateTerminalToolWindow<CR>
+
+" Insert mode shortcut
+inoremap <C-j> <Down>
+inoremap <C-h> <Left>
+inoremap <C-k> <Up>
+inoremap <C-l> <Right>
+inoremap <C-a> <Home>
+inoremap <C-e> <End>
+inoremap <C-d> <Delete>
+
+" Quit insert mode
+inoremap jk <Esc>
+
+" Quit visual mode
+vnoremap v <Esc>
+
+" Move to the start of line
+map H ^
+
+" Move to the end of line
+map L $
+
+" Redo
+nnoremap U <C-r>
+
+" Yank to the end of line
+nnoremap Y y$
+
+""" Window operation
+
+" 关闭窗口
+nnoremap <Leader>wd <C-W>c
+
+" 切换窗口
+nnoremap <C-w> <C-W>w
+
+nnoremap <C-j> <C-W>j
+nnoremap <C-k> <C-W>k
+nnoremap <C-h> <C-W>h
+nnoremap <C-l> <C-W>l
+
+" 创建窗口 水平"
+nnoremap <Leader>ws <C-W>s
+nnoremap <Leader>- <C-W>s
+
+" 创建窗口 竖直"
+nnoremap <Leader>wv <C-W>v
+nnoremap <Leader>\ <C-W>v
+
+" 关闭标签页
+nnoremap <Leader>bd :tabclose<CR>
+
+" 重命名
+nnoremap <Leader>r :action RenameElement<CR>
+
+"""end
+
+" Tab operation
+nnoremap tn gt
+nnoremap R gt
+nnoremap tp gT
+nnoremap E gT
+
+" go to somewhere (g in normal mode for goto somewhere)
+nnoremap ga :action GotoAction<CR>
+nnoremap gb :action JumpToLastChange<CR>
+nnoremap gc :action GotoClass<CR>
+nnoremap gd :action GotoDeclaration<CR>
+nnoremap gs :action GotoSuperMethod<CR>
+nnoremap gi :action GotoImplementation<CR>
+nnoremap gf :action GotoFile<CR>
+nnoremap gm :action GotoSymbol<CR>
+nnoremap gu :action ShowUsages<CR>
+nnoremap gt :action GotoTest<CR>
+nnoremap gp :action FindInPath<CR>
+nnoremap gh :action Back<CR>
+nnoremap gl :action Forward<CR>
+
+nnoremap <leader>f :action GotoFile<CR> 
+nnoremap <leader>m :action GotoSymbol<CR>
+nnoremap <leader>w :action FindInPath<CR>
+
+" action
+map <leader>R :action RecentFiles<CR>
+nnoremap <leader>g :action ActivateCommitToolWindow<CR>
+nnoremap <leader>o :action ActivateStructureToolWindow<CR>
+nnoremap <leader>cr :action Run<CR>
+nnoremap <leader>cc :action Stop<CR>
+" Select All
+nnoremap <leader>a :action $SelectAll<CR>
+
+" indent a block
+nnoremap <Tab> >>_
+nnoremap <S-Tab> <<_
+inoremap <S-Tab> <C-D>
+vnoremap <Tab> >gv
+vnoremap <S-Tab> <gv
+vnoremap > >gv
+vnoremap < <gv
+
+" Move line"
+map J :action MoveLineDown<CR>
+map K :action MoveLineUp<CR>
+" New File
+nnoremap <leader>n :action NewFile<CR>
+
+" Emulatessymotion-f) NERDTree
+" Basic Commands:
+" <leader>e/E - open/close NERDTree
+" q         - close NERDTree
+" o        - open file,directory and bookmarks
+" go      - open file,directory and bookmarks but leave cursor in the NERDTree
+" i Open selected file in a split window
+" gi Open selected file in a split window but leave cursor in the NERDTree
+" s Open selected file in a new vsplit
+" gs Open selected file in a new vsplit but leave cursor in the NERDTree
+" t Open selected node/bookmark in a new tab
+"<C-J> Jump down to next sibling of the current directory
+"<C-K> Jump up to previous sibling of the current directory
+" R Recursively refresh the current root"
+" m Show the NERD Tree menu
+" A Show in full screen
+" See https://github.com/JetBranisn/ideavim/wiki/NERDTree-support for details
+let g:NErDTreeMapActivateNode='l'
+let g:NERDTreeMapJumpParentNode='h'
+map <leader>e :NERDTree<CR>
+map <leader>E :NERDTreeClose<CR>
+
+
+" easymotion
+" need AceJump and IdeaVim-EasyMotion plugins
+" easymotion-s Search backward
+" easymotion-f Search forward
+map F <Plug>(easymotion-s)
+map f <Plug>(easymotion-f)
+
+nnoremap <c-z> :action ToggleDistractionFreeMode<CR>
+nnoremap <leader>k :action ShowHoverInfo<CR>
+nnoremap K :action ShowHoverInfo<CR>
